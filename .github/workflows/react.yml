@@ -9,6 +9,9 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: CI-CD-Pipeline-tutorial   # 👈 All steps run here
 
     steps:
       - name: Checkout code
@@ -27,6 +30,3 @@ jobs:
 
       - name: Run tests
         run: npm run test
-
-
- 
