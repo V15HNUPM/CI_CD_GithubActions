@@ -36,6 +36,9 @@ jobs:
   docker-build-and-push:
     needs: build-and-test
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: CI-CD-Pipeline-tutorial
 
     steps:
       - name: Checkout code
