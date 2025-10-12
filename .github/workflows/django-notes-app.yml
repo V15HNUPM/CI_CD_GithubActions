@@ -42,17 +42,12 @@ jobs:
 
       - name: Docker login to Docker Hub
         run: |
-          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" -p "${{ secrets.DOCKERHUB_TOKEN }}"
 
-      - name: Build Docker images with docker-compose
-        run: docker compose -p custom -f docker-compose.yml build
+      - name: Build Docker image
+        run: docker build -t "${{ secrets.DOCKERHUB_USERNAME }}/django-notes-app:latest" .
 
-      - name: Tag images for Docker Hub
-        run: |
-          docker tag custom_django:latest "${{ secrets.DOCKERHUB_USERNAME }}/django-notes-app:latest"
-          docker tag custom_nginx:latest "${{ secrets.DOCKERHUB_USERNAME }}/nginx_cont:latest"
+      - name: Push Docker image to Docker Hub
+        run: docker push "${{ secrets.DOCKERHUB_USERNAME }}/django-notes-app:latest"   
 
-      - name: Push images to Docker Hub
-        run: |
-          docker push "${{ secrets.DOCKERHUB_USERNAME }}/django-notes-app:latest"
-          docker push "${{ secrets.DOCKERHUB_USERNAME }}/nginx_cont:latest"
+     
