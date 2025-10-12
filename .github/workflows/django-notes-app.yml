@@ -45,12 +45,12 @@ jobs:
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
       - name: Build Docker images with docker-compose
-        run: docker compose -f docker-compose.yml build
+        run: docker compose -p custom -f docker-compose.yml build
 
       - name: Tag images for Docker Hub
         run: |
-          docker tag django_cont "${{ secrets.DOCKERHUB_USERNAME }}/django_cont:latest"
-          docker tag nginx_cont "${{ secrets.DOCKERHUB_USERNAME }}/nginx_cont:latest"
+          docker tag custom_django:latest "${{ secrets.DOCKERHUB_USERNAME }}/django_cont:latest"
+          docker tag custom_nginx:latest "${{ secrets.DOCKERHUB_USERNAME }}/nginx_cont:latest"
 
       - name: Push images to Docker Hub
         run: |
